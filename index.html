@@ -17,7 +17,7 @@
     <body>
         <div id="main">
             <div id="header">
-                <div id="menu">  <a href="#">ABOUT US </a> <a href="concert_main.html">CONCERTS</a> <a href="band_main.html">BANDS</a> <a href="#">HOME</a> </div>
+                <div id="menu">  <a href="#">ABOUT US </a> <a href="concert_main.html">CONCERTS</a> <a href="band_main.html">BANDS</a> <a href="friends_main.html">FRIENDS</a><a href="index.html">HOME</a> </div>
                 <div id="header-Bottom">
                     <div id="logoBlock">
                         <h1>Music Community</h1>
@@ -25,18 +25,24 @@
                     </div>
                     <div id="loginBlock">
                         <h3>Login</h3>
-                        <form role="form" method="POST">
+                        <form role="form" method="POST" id="loginForm">
                             <div class="form-group">
                                 <input type="textfield" placeholder="Username" name="username"></input>
-                                <input type="password" placeholder="Password" name="username"></input>
+                                <input type="password" placeholder="Password" name="password"></input>
                                 <div id="loginFormButtons"> 
                                     <input type="button" name="Submit" onclick="javascript:loginUser()" value="Submit"/>
                                 </div>
                             </div>
                         </form>
+                        <div id="loginFailed">Login Fail</div>
                         <form id="registerForm" role="form" action="register.html" method="POST">
                             No Login? <input type="Submit" name="Register" value="Register"/>
                         </form>    
+                    </div>
+                    <!--hidden-->
+                    <div id="loggedInBlock" class="hiddenBlock">
+                        <h3>Welcome</h3>
+                        <a href="user_account.html">Account</a>        
                     </div>
                 </div>
             </div>

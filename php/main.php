@@ -1,5 +1,5 @@
 <?php 
-	$SQLConnection = new mysqli("localhost", "root", "", "sandwichDB");
+	$SQLConnection = new mysqli("localhost", "root", "", "projectdb");
 
 	function registerUser($username, $password, $uName, $uDOB, $uCity)
 	{
@@ -20,7 +20,7 @@
 		$prevLoginTime = '';
 		
 		//Check previous login Time
-		$Query = $SQLConnection->prepare("SELECT uLoginTime FROM users where username=? AND password=?");
+		$Query = $SQLConnection->prepare("SELECT uLoginTime FROM users WHERE username=? AND password=?");
 		$Query->bind_param("ss", $username, $password);
 		$Query->execute();
 
@@ -33,11 +33,25 @@
 		while($row = $result->fetch_assoc())
 			$prevLoginTime = $row['uLoginTime'];
 
-		$Query = $SQLConnection->prepare("INSERT INTO users (uLoginTime)
-										  VALUES (?)");
-		$Query->bind_param('s', $timestamp);
+		$Query = $SQLConnection->prepare("UPDATE users SET uLoginTime=? WHERE username=? AND password=?");
+		$Query->bind_param('sss', $timestamp, $username, $password);
 		$Query->execute();	
 
 		return $prevLoginTime;
+	}
+
+	function getAllBands()
+	{
+		$bandArray = array();
+
+		global $SQLConnection;
+		$Query = $SQLConnection->prepare("SELECT band.bname, musictype.musicName FROM band JOIN musictype ON band.musicPlaying = musicType.musicID");
+		$Query->execute();
+		$result = $Query->get_result();
+
+		while($row = $result->fetch_assoc())
+			array_push($bandArray, $row);
+
+		return json_encode($bandArray);
 	}
 ?>

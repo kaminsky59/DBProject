@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Untitled Document</title>
+        <script src="js/jquery-2.1.1.js"></script>
+        <script src="js/jquery-ui-1.11.2/jquery-ui.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="js/jquery.multi-select.js"></script>
+        <link rel="stylesheet" href="js/jquery-ui-1.11.2/jquery-ui.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+        <link href="css/multi-select.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <script>
+                $(document).ready(function()
+                {
+                    $('#select-from').multiSelect({ selectableOptgroup: true });
+                });
+        </script>
+        <select name="selectfrom" id="select-from" multiple="multiple">
+            <optgroup label="Rock">
+                <option value="1">Item 1</option>
+                <option value="2">Item 2</option>
+                <option value="3">Item 3</option>
+                <option value="4">Item 4</option>
+            </optgroup>
+        </select>
+    </body>
+</html>

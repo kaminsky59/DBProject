@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Untitled Document</title>
+        <script src="js/jquery-2.1.1.js"></script>
+        <script src="js/jquery-ui-1.11.2/jquery-ui.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="js/jquery.multi-select.js"></script>
+        <script src="js/source.js"></script>
+        <link rel="stylesheet" href="js/jquery-ui-1.11.2/jquery-ui.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+        <link href="css/styles.css" rel="stylesheet" type="text/css" />
+        <link href="css/multi-select.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="main">
+            <div id="header">
+                <div id="menu">  <a href="#">ABOUT US </a> <a href="concert_main.html">CONCERTS</a> <a href="band_main.html">BANDS</a> <a href="index.html">HOME</a> </div>
+                <div id="header-Bottom">
+                    <div id="logoBlock">
+                        <h1>Music Community</h1>
+                        <p>EVERYMUSIC YOU WANT TO LISTEN </p>
+                    </div>
+                </div> -->
+            </div>
+            <div id="mainCont">
+                <div id="Register">
+                    <h3>Register</h3>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="textfield" class="form-control" id="username" placeholder="Enter Username">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Enter Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="uEmail">Email address</label>
+                            <input type="email" class="form-control" id="uEmail" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="uDOB">Date of Birth</label>
+                            <input type="date" class="form-control" id="uDOB" placeholder="Enter Date of Birth">
+                        </div>
+                        <div class="form-group">
+                            <label for="uCity">Email address</label>
+                            <input type="textfield" class="form-control" id="uCity" placeholder="Enter city">
+                        </div>
+                        <div class="form-group" id="musicSelect">
+                             <label for="musicType">Select Music Type</label>
+                             <!--Generate this data on page load using javascript-->
+                            <select name="selectfrom" id="select-from" multiple="multiple">
+                                <optgroup label="Rock">
+                                    <option value="1">Item 1</option>
+                                    <option value="2">Item 2</option>
+                                    <option value="3">Item 3</option>
+                                    <option value="4">Item 4</option>
+                                </optgroup>
+                                <optgroup label="Rap">
+                                    <option value="5">Item 1</option>
+                                    <option value="6">Item 2</option>
+                                    <option value="7">Item 3</option>
+                                    <option value="8">Item 4</option>
+                                </optgroup>
+                                <optgroup label="Country">
+                                    <option value="9">Item 1</option>
+                                    <option value="10">Item 2</option>
+                                    <option value="11">Item 3</option>
+                                    <option value="12">Item 4</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-group">      
+                            <button type="button" onclick="javascript:registerUser()" class="btn btn-default">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="footer">
+                    <div id="footerMenu"></div>
+                    <div class="rights">Copyright © 2003-2008 <a href="#">www.My Template.com.</a> All Rights Reserved.</div>
+                    <div class="rights">Designed by: <a title="Web Templates" href="http://www.elegant-templates.com">Elegant Templates</a></div>
+                </div>
+            </div>
+
+
+    </body>
+</html>

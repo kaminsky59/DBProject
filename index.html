@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Untitled Document</title>
+        <script src="js/jquery-2.1.1.js"></script>
+        <script src="js/jquery-ui-1.11.2/jquery-ui.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+        <script src="js/jquery.multi-select.js"></script>
+        <script src="js/source.js"></script>
+        <link rel="stylesheet" href="js/jquery-ui-1.11.2/jquery-ui.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
+        <link href="css/styles.css" rel="stylesheet" type="text/css" />
+        <link href="css/multi-select.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="main">
+            <div id="header">
+                <div id="menu">  <a href="#">ABOUT US </a> <a href="concert_main.html">CONCERTS</a> <a href="band_main.html">BANDS</a> <a href="#">HOME</a> </div>
+                <div id="header-Bottom">
+                    <div id="logoBlock">
+                        <h1>Music Community</h1>
+                        <p>EVERYMUSIC YOU WANT TO LISTEN </p>
+                    </div>
+                    <div id="loginBlock">
+                        <h3>Login</h3>
+                        <form role="form" method="POST">
+                            <div class="form-group">
+                                <input type="textfield" placeholder="Username" name="username"></input>
+                                <input type="password" placeholder="Password" name="username"></input>
+                                <div id="loginFormButtons"> 
+                                    <input type="button" name="Submit" onclick="javascript:loginUser()" value="Submit"/>
+                                </div>
+                            </div>
+                        </form>
+                        <form id="registerForm" role="form" action="register.html" method="POST">
+                            No Login? <input type="Submit" name="Register" value="Register"/>
+                        </form>    
+                    </div>
+                </div>
+            </div>
+            <div id="mainCont">
+                <div id="leftCol">
+                    <div id="welcomeBox">
+                        <h3>Free Music Information</h3>
+                        <p>Want to refresh your playlist without spending a dime? Well, you're in luck because<span>MTV.com</span> has lots of free music downloads just for you. Yes, you heard us right, you can get free music downloads right here! They'll cost you nothing, nada, zip, zero! And...Want to refresh your playlist without spending a dime? Well, you're in luck because MTV.com has lots of free music downloads just for you. Yes, you heard us right, you can get free music downloads right here! </p>
+                    </div>
+                    <div id="playListTop">
+                        <h3>UPCOMING EVENTS</h3>
+                    </div>
+                    <div id="playListBody">
+                        <div class="playListLight">
+                            <p class="bot">&nbsp;</p>
+                        </div>
+                    </div>
+                    <div id="playListBot"></div>
+                </div>
+                <div id="rightCol">
+                    <div id="videoBlock">
+                        <div id="videoBlockTop">
+                            <h3>FRIENDS FEED</h3>
+                            <p>The latest info about your friends</p>
+                        </div>
+                        <div id="videoBlockBody">
+                        </div>
+                    </div>
+                    <div id="videoBlockBot"></div>
+                </div>
+            </div>
+            <div id="footer">
+                <div id="footerMenu"></div>
+                <div class="rights">Copyright © 2003-2008 <a href="#">www.My Template.com.</a> All Rights Reserved.</div>
+                <div class="rights">Designed by: <a title="Web Templates" href="http://www.elegant-templates.com">Elegant Templates</a></div>
+            </div>
+        </div>
+
+
+    </body>
+</html>

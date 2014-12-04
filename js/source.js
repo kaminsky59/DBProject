@@ -52,9 +52,27 @@ function loadBandPage()
 
         for(var i = 0; i < result.length; i++)
         {
-            html += "<tr><td>" + result[i]["bname"] + "</td><td>" + result[i]["musicName"] + "</td><td><button name=\"addButton\">Add</button></td></tr>";
+            html += "<tr><td>" + result[i]["bname"] + "</td><td>" + result[i]["musicName"] + "</td><td><button name=\"addButton\">Add</button></td><td><button name=\"editButton\">Edit</button></td></tr>";
         }
 
         $("#bandSearchTable").append(html);
+    });
+}
+
+function loadHomePage()
+{
+    $.ajax({
+        url: "php/ajax_GetUpcomingConcerts.php",
+        dataType: "json"
+    }).done(function(result)
+    {
+        var html = "";
+
+        for(var i = 0; i < result.length; i++)
+        {
+            html += "<tr><td>" + result[i]["cTitle"] + "</td><td>" + result[i]["cVenue"] + "</td><td>" + result[i]["cDateTime"] + "</td></tr>";
+        }
+
+        $("#upcomingTable").append(html);
     });
 }

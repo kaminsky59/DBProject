@@ -14,7 +14,7 @@
         <link href="css/styles.css" rel="stylesheet" type="text/css" />
         <link href="css/multi-select.css" rel="stylesheet" type="text/css" />
     </head>
-    <body>
+    <body onload="loadHomePage()">
         <div id="main">
             <div id="header">
                 <div id="menu">  <a href="#">ABOUT US </a> <a href="concert_main.html">CONCERTS</a> <a href="band_main.html">BANDS</a> <a href="friends_main.html">FRIENDS</a><a href="index.html">HOME</a> </div>
@@ -56,8 +56,11 @@
                         <h3>UPCOMING EVENTS</h3>
                     </div>
                     <div id="playListBody">
-                        <div class="playListLight">
-                            <p class="bot">&nbsp;</p>
+
+                        <div id="bandTableResult" class="SearchTableResult">
+                            <table id="upcomingTable" class="SearchTable">
+                                <thead><tr><td>Name</td><td>Venue</td><td>Date/Time</td></thead>
+                            </table>
                         </div>
                     </div>
                     <div id="playListBot"></div>

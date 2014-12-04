@@ -1,6 +1,7 @@
 <?php 
 	$SQLConnection = new mysqli("localhost", "root", "", "projectdb");
 
+	//Add user music likes
 	function registerUser($username, $password, $uName, $uDOB, $uCity)
 	{
 		$trustLevel = 1;
@@ -54,4 +55,32 @@
 
 		return json_encode($bandArray);
 	}
+
+	function getUpcomingConcerts()
+	{
+		$upComingConcertArray = array();
+
+		global $SQLConnection;
+		$Query = $SQLConnection->prepare("SELECT DISTINCT concert.cTitle, concert.cVenue, concert.cDateTime
+										  FROM concert 
+										  WHERE cDateTime < DATE_ADD(CURDATE(), INTERVAL 30 DAY)");
+		$Query->execute();
+		$result = $Query->get_result();
+
+		while($row = $result->fetch_assoc())
+			array_push($upComingConcertArray, $row);
+
+		return json_encode($upComingConcertArray);
+	}
+
+	function getUsersFeed()
+	{
+
+	}
+
+	function addBand($bandUsername, $bName, $bEmail, $bCity, $bURL, $musicLikeArray)
+	{
+		
+	}
+
 ?>

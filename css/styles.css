@@ -524,12 +524,15 @@ text-decoration:underline;
     height: 85%;
 }
 
-#newBand
+.newBandClass
 {
-
 	clear:both;
 	margin:0 auto;
 	text-align: center;
+	padding-top: 20px;
+	margin: 0 auto;
+	width:300px;
+	
 }
 
 #loginFailed
@@ -552,4 +555,9 @@ text-decoration:underline;
    padding-left:150px;
    padding-top:5px;
    height:84px;
+}
+
+.newBandClass input
+{
+	height: 25px;
 }

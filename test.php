@@ -2,5 +2,5 @@
 
     include "main.php";
 
-    echo getUpcomingConcerts();
+    echo getUsersFeed();
     ?>

@@ -61,6 +61,7 @@ function loadBandPage()
 
 function loadHomePage()
 {
+    //Get upcoming concerts
     $.ajax({
         url: "php/ajax_GetUpcomingConcerts.php",
         dataType: "json"
@@ -74,5 +75,31 @@ function loadHomePage()
         }
 
         $("#upcomingTable").append(html);
+    });
+
+    //Get users feed
+    $.ajax({
+        url: "php/ajax_GetUsersFeed.php",
+        dataType: "json"
+    }).done(function(result)
+    {
+        var html = "";
+
+        for(var i = 0; i < result.length; i++)
+        {
+            var attended = "";
+            var review = "";
+            var rating = "";
+
+            if(result[i]['attended'])
+                attended = result[i]['attended'];
+            if(result[i]['review'])
+                review = result[i]['review'];
+            if(result[i]['rating'])
+                rating = result[i]['rating'];
+            html += "<tr><td>" + result[i]["uName"] + "</td><td>" + result[i]["cTitle"] + "</td><td>" + attended + "</td><td>" + rating + "</td><td>" + review + "</td></tr>";
+        }
+
+        $("#userFeedTable").append(html);
     });
 }

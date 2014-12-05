@@ -114,7 +114,7 @@ margin-bottom:0;
 #leftCol {
 margin:0;
 float:left;
-width:366px;
+width:500px;
 }
 #welcomeBox {
 margin:0;
@@ -154,7 +154,7 @@ padding-right:5px;
 	font-size:12px;
 	font-weight:bold;
 	height:24px;
-	width:337px;
+	width:500px;
 	margin:0;
 	padding-left:30px;
 	padding-top:8px;
@@ -165,7 +165,7 @@ padding-right:5px;
 	 border-left:solid 1px #40434A;
 	 border-right:solid 1px #40434A;
 	 height:359px;
-	 width:365px;
+	 width:498px;
 	}
 	.head {
       height:20px;
@@ -254,7 +254,7 @@ padding-right:5px;
     #playListBot {
 	 background: url(../images/play_list_botbg.gif) no-repeat;	
 	 height:32px;
-	 width:367px;
+	 width:500px;
 	}
 	
   #centrCol {

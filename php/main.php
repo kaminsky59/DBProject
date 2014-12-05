@@ -46,7 +46,7 @@
 		$bandArray = array();
 
 		global $SQLConnection;
-		$Query = $SQLConnection->prepare("SELECT band.bname, musictype.musicName FROM band JOIN musictype ON band.musicPlaying = musicType.musicID");
+		$Query = $SQLConnection->prepare("SELECT cTitle, cVenue, cDateTime FROM concert");
 		$Query->execute();
 		$result = $Query->get_result();
 
@@ -54,6 +54,21 @@
 			array_push($bandArray, $row);
 
 		return json_encode($bandArray);
+	}
+
+	function getAllConcerts
+	{
+		$concertArray = array();
+
+		global $SQLConnection;
+		$Query = $SQLConnection->prepare("SELECT band.bname, musictype.musicName FROM band JOIN musictype ON band.musicPlaying = musicType.musicID");
+		$Query->execute();
+		$result = $Query->get_result();
+
+		while($row = $result->fetch_assoc())
+			array_push($concertArray, $row);
+
+		return json_encode($concertArray);
 	}
 
 	function getUpcomingConcerts()
@@ -75,12 +90,63 @@
 
 	function getUsersFeed()
 	{
+		//Return users who are have attended or will attend a concert
+		global $SQLConnection;
+		$usersFeedArray = array();
 
+		$Query = $SQLConnection->prepare("SELECT users.uName, attend.rating, attend.attended, attend.review, concert.cTitle  
+										  FROM attend
+										  JOIN users on attend.username = users.username
+										  JOIN concert on attend.cname = concert.cname;");
+		$Query->execute();
+		$result = $Query->get_result();
+
+		while($row = $result->fetch_assoc())
+			array_push($usersFeedArray, $row);
+
+		return json_encode($usersFeedArray);		
+	}
+
+	function getAllUsers()
+	{
+		global $SQLConnection;
+		$allUserArray = array();
+
+		$Query = $SQLConnection->prepare("SELECT * FROM users");
+		$Query->execute();
+
+		$result = $Query->get_result();
+
+		while($row = $result->fetch_assoc())
+			array_push($allUserArray, $row);
+
+		return json_encode($allUserArray);
+	}
+
+	function searchForUser($searchText)
+	{
+		//Search for username
+
+		//Search for music likes
 	}
 
 	function addBand($bandUsername, $bName, $bEmail, $bCity, $bURL, $musicLikeArray)
 	{
-		
+
 	}
 
+	//LoggedInUser is considered the followee
+	//FollowingUser is the user that will be followed
+	function followUser($loggedInUser, $followingUser)
+	{
+		global $SQLConnection;
+		$timestamp = date('Y-m-d H:i:s');
+
+		$Query = $SQLConnection->prepare("INSERT INTO follow VALUES(?, ?, ?)");
+		$Query->bind_param('sss', $loggedInUser, $followingUser, $timestamp);
+		$Query->execute();
+		$result = $Query->get_result();
+
+		return $result;
+	}
 ?>

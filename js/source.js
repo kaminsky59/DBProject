@@ -37,23 +37,21 @@ function loginUser()
             $("#loginBlock").css('display', 'none');
             $("#loggedInBlock").css('display', 'initial');
 
-            
-            //$("body").append("<p id=hiddenUsername>" + username + "</p>");
-            //$("#hiddenUsername").css("display", "none");
-
             document.cookie = "username=" + username;
         }
     });
+}
 
-
-
-    //Change the div of the login and register to 'Welcome <Name>'   
+function logOutUser()
+{
+    document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC"; 
+    location.reload();
 }
 
 function loadBandPage()
 {
     isUserLoggedIn();
-    
+
     $.ajax({
         url: "php/ajax_GetAllBands.php",
         dataType: "json"
@@ -63,7 +61,7 @@ function loadBandPage()
 
         for(var i = 0; i < result.length; i++)
         {
-            html += "<tr id=\"" + result[i]["bandUsername"] + "\"><td>" + result[i]["bname"] + "</td><td>" + result[i]["musicName"] + "</td><td><button id=\"AddBand_" + i + "\" name=\"addButton\" onclick=javascript:addBand(" + i + ")>Add</button></td><td><button name=\"editButton\">Edit</button></td></tr>";
+            html += "<tr><td>" + result[i]["bname"] + "</td><td>" + result[i]["musicName"] + "</td><td><button id=\"AddBand_" + i + "\" name=\"addButton\" onclick=javascript:goToBand(\"" + result[i]["bandUsername"] + "\")>GO TO</button></td></tr>";
         }
 
         $("#bandSearchTable").append(html);
@@ -143,7 +141,7 @@ function loadConcertPage()
 
         for(var i = 0; i < result.length; i++)
         {
-           html += "<tr><td>" + result[i]["cTitle"] + "</td><td>" + result[i]["cVenue"] + "</td><td>" + result[i]["cDateTime"] + "</td><td>" + "</td><td><button id=\"band_" + i + "\">Edit</button></td></tr>";
+           html += "<tr><td>" + result[i]["cTitle"] + "</td><td>" + result[i]["cVenue"] + "</td><td>" + result[i]["cDateTime"] + "</td><td>" + "</td><td><button onclick=javascript:addConcert(\"" + result[i]['cName'] + "\")>Add</button></td></td><td><button onclick=javascript:editConcert(\"" + result[i]['cName'] + "\")>Edit</button></td></tr>";
         }
 
         $("#concertSearchTable").append(html);
@@ -177,15 +175,92 @@ function loadUserPage()
     });
 }
 
-function addBand(num)
+function getUsernameFromCookie()
 {
-    var parentElement = $("AddBand_" + num).parent();
-    var username = $("#hiddenUsername").val();
-    //Get user username
+    var usernameCookie = document.cookie;
+    name = usernameCookie.split('=')[0];
+    value = usernameCookie.split('=')[1];
+
+    return value;
+}
+
+function addBand(bandName)
+{
+    // /.attr('id')
+    var username = getUsernameFromCookie();
 
     //Get band username
 
     $.ajax({
-        url: "php/ajax_AddBandToUser.php"
-    })
+        url: "php/ajax_AddBandToUser.php",
+        data: "username=" + username + "&bandName=" + bandName
+    }).done();
+}
+
+function addConcert(concertName)
+{
+    var username = getUsernameFromCookie();
+
+    $.ajax({
+        url: "php/ajax_ScheduleConcert.php",
+        data: "username=" + username + "&concertName=" + concertName
+    }).done();
+}
+
+function loadUserAccountPage()
+{
+    isUserLoggedIn();
+
+    var username = getUsernameFromCookie();
+
+    $.ajax({
+        url: "php/ajax_GetConcertForUser.php",
+        data: "username=" + username,
+        dataType: "json"
+    }).done(function(result)
+    {
+        var html = "";
+
+        for(var i = 0; i < result.length; i++)
+        {
+            var rating = "";
+            var review = "";
+            var attended = "Not Yet!";
+
+            if(result[i]["rating"] != null)
+            {
+                rating = result[i]["rating"]
+            }
+
+            if(result[i]["review"] != null)
+            {
+                review = result[i]["review"]
+            }
+
+            if(result[i]["attended"] == 1)
+            {
+                attended = "Yes I did :)";
+            }
+
+            html += "<tr><td>" + result[i]["cTitle"] + "</td><td>" + attended + "</td><td>" + rating + "</td><td>" + review + "</td></tr>";
+        }
+
+        $("#userConcertTable").append(html);
+    });
+
+    $.ajax({
+        url: "php/ajax_GetCurrentFriends.php",
+        data: "username=" + username,
+        dataType: "json"
+    }).done(function(result)
+    {
+        var html = "";
+
+        for(var i = 0; i < result.length; i++)
+        {
+           html += "<tr><td>" + result[i]["uName"] + "</td><td>" + "</td><td>" +"</td><td>" + "</td></tr>";
+        }
+
+        $("#friendFeedTable").append(html);
+   });
 }

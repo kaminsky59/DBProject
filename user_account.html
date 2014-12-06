@@ -14,7 +14,7 @@
         <link href="css/styles.css" rel="stylesheet" type="text/css" />
         <link href="css/multi-select.css" rel="stylesheet" type="text/css" />
     </head>
-    <body onload="loadHomePage()">
+    <body onload="loadUserAccountPage()">
         <div id="main">
             <div id="header">
                 <div id="menu">  <a href="#">ABOUT US </a> <a href="concert_main.html">CONCERTS</a> <a href="band_main.html">BANDS</a> <a href="friends_main.html">FRIENDS</a><a href="index.html">HOME</a> </div>
@@ -43,23 +43,19 @@
                     <div id="loggedInBlock" class="hiddenBlock">
                         <h3>Welcome</h3>
                         <a href="user_account.html">Account</a>
-                        <button id="LogOut"  onclick="javascript:logOutUser()">Log Out</button>
+                        <button id="LogOut" onclick="javascript:logOutUser()">Log Out</button>
                     </div>
                 </div>
             </div>
             <div id="mainCont">
                 <div id="leftCol">
-                    <div id="welcomeBox">
-                        <h3>Free Music Information</h3>
-                        <p>Want to refresh your playlist without spending a dime? Well, you're in luck because<span>MTV.com</span> has lots of free music downloads just for you. Yes, you heard us right, you can get free music downloads right here! They'll cost you nothing, nada, zip, zero! And...Want to refresh your playlist without spending a dime? Well, you're in luck because MTV.com has lots of free music downloads just for you. Yes, you heard us right, you can get free music downloads right here! </p>
-                    </div>
                     <div id="playListTop">
-                        <h3>UPCOMING EVENTS</h3>
+                        <h3>My Concerts</h3>
                     </div>
                     <div id="playListBody">
-                        <div id="concertTableResult" class="SearchTableResult">
-                            <table id="upcomingTable" class="SearchTable">
-                                <thead><tr><td>Name</td><td>Venue</td><td>Date/Time</td></thead>
+                        <div id="userConcertTableResult" class="SearchTableResult">
+                            <table id="userConcertTable" class="SearchTable">
+                                <thead><tr><td>Name</td><td>Attended</td><td>Rating</td><td>Review</td></thead>
                             </table>
                         </div>
                     </div>
@@ -72,9 +68,9 @@
                             <p>The latest info about your friends</p>
                         </div>
                         <div id="videoBlockBody">
-                            <div id="userFeedTableResult" class="SearchTableResult">
-                            <table id="userFeedTable" class="SearchTable">
-                                <thead><tr><td>Name</td><td>Concert</td><td>Attended</td><td>Rating</td><td>Review</td></thead>
+                            <div id="friendFeedTableResult" class="SearchTableResult">
+                            <table id="friendFeedTable" class="SearchTable">
+                                <thead><tr><td>Name</td><td>Concert</td><td>Attended</td><td>Rating</td></thead>
                             </table>
                         </div>
                         </div>

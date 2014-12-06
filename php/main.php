@@ -61,7 +61,7 @@
 		$concertArray = array();
 
 		global $SQLConnection;
-		$Query = $SQLConnection->prepare("SELECT cTitle, cVenue, cDateTime FROM concert");
+		$Query = $SQLConnection->prepare("SELECT cTitle, cVenue, cDateTime, cName FROM concert");
 		$Query->execute();
 		$result = $Query->get_result();
 
@@ -78,7 +78,7 @@
 		global $SQLConnection;
 		$Query = $SQLConnection->prepare("SELECT DISTINCT concert.cTitle, concert.cVenue, concert.cDateTime
 										  FROM concert 
-										  WHERE cDateTime < DATE_ADD(CURDATE(), INTERVAL 30 DAY)");
+										  WHERE cDateTime < DATE_ADD(CURDATE(), INTERVAL 30 DAY) AND cDateTime > CURRENT_TIMESTAMP()");
 		$Query->execute();
 		$result = $Query->get_result();
 
@@ -205,5 +205,50 @@
 		$result = $Query->get_result();
 
 		return $result;	
+	}
+
+	function scheduleConcert($username, $concertName)
+	{
+		global $SQLConnection;
+
+		$Query = $SQLConnection->prepare("INSERT INTO attend VALUES(?, ?, NULL, 0, NULL)");
+		$Query->bind_param('ss', $username, $concertName);
+		var_dump($Query);
+		$Query->execute();
+		$result = $Query->get_result();
+
+		return $result;		
+	}
+
+	function getConcertsForUser($username)
+	{
+		$userConcerts = array();
+
+		global $SQLConnection;
+		$Query = $SQLConnection->prepare("SELECT attend.username, cTitle, rating, attended, review FROM attend JOIN concert ON attend.cname=concert.cname WHERE username = ?");
+		$Query->bind_param('s', $username);
+		$Query->execute();
+		$result = $Query->get_result();
+
+		while($row = $result->fetch_assoc())
+			array_push($userConcerts, $row);
+
+		return json_encode($userConcerts);		
+	}
+
+	function getCurrentFriends($username)
+	{
+		$userArray = array();
+
+		global $SQLConnection;
+		$Query = $SQLConnection->prepare("SELECT followee, uName FROM follow JOIN users ON users.username = follow.followee WHERE follower = ?");
+		$Query->bind_param('s', $username);
+		$Query->execute();
+		$result = $Query->get_result();
+
+		while($row = $result->fetch_assoc())
+			array_push($userArray, $row);
+
+		return json_encode($userArray);			
 	}
 ?>

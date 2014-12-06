@@ -14,7 +14,7 @@
         <link href="css/styles.css" rel="stylesheet" type="text/css" />
         <link href="css/multi-select.css" rel="stylesheet" type="text/css" />
     </head>
-    <body>
+    <body onload="loadConcertPage()">
         <div id="main">
             <div id="header">
                 <div id="menu">  <a href="#">ABOUT US </a> <a href="concert_main.html">CONCERTS</a> <a href="band_main.html">BANDS</a> <a href="friends_main.html">FRIENDS</a><a href="index.html">HOME</a> </div>
@@ -39,62 +39,12 @@
                     </div>
                     <div id="playListBody">
                         <form>
-                            <div id="bandSearchDiv" class="leftColSearch">
-                                <input type="text" id="bandSearch" class="form-control searchBox" placeholder="Search (Name, Genre, etc)">
+                            <div id="concertSearchDiv" class="leftColSearch">
+                                <input type="text" id="concertSearch" class="form-control searchBox" placeholder="Search (Name, Genre, etc)">
                             </div>
                         </form>
                         <div id="concertTableResult" class="SearchTableResult">
-                            <table id="bandSearchTable" class="SearchTable">
-                                <tr>
-                                    <td>Metallic</td>
-                                    <td>Genre: Metal</td>
-                                    <td><button name="addButton">Add</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Red Hot Chilli Peppers</td>
-                                    <td>Genre: Alternative</td>
-                                    <td><button name="addButton">Add</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Metallic</td>
-                                    <td>Genre: Metal</td>
-                                    <td><button name="addButton">Add</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Red Hot Chilli Peppers</td>
-                                    <td>Genre: Alternative</td>
-                                    <td><button name="addButton">Add</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Metallic</td>
-                                    <td>Genre: Metal</td>
-                                    <td><button name="addButton">Add</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Red Hot Chilli Peppers</td>
-                                    <td>Genre: Alternative</td>
-                                    <td><button name="addButton">Add</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Metallic</td>
-                                    <td>Genre: Metal</td>
-                                    <td><button name="addButton">Add</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Red Hot Chilli Peppers</td>
-                                    <td>Genre: Alternative</td>
-                                    <td><button name="addButton">Add</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Metallic</td>
-                                    <td>Genre: Metal</td>
-                                    <td><button name="addButton">Add</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Red Hot Chilli Peppers</td>
-                                    <td>Genre: Alternative</td>
-                                    <td><button name="addButton">Add</button></td>
-                                </tr>
+                            <table id="concertSearchTable" class="SearchTable">
                             </table>
                         </div>
                     </div>

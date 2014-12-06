@@ -46,7 +46,7 @@
 		$bandArray = array();
 
 		global $SQLConnection;
-		$Query = $SQLConnection->prepare("SELECT cTitle, cVenue, cDateTime FROM concert");
+		$Query = $SQLConnection->prepare("SELECT band.bandUsername, band.bname, musictype.musicName FROM band JOIN musictype ON band.musicPlaying = musicType.musicID");
 		$Query->execute();
 		$result = $Query->get_result();
 
@@ -56,12 +56,12 @@
 		return json_encode($bandArray);
 	}
 
-	function getAllConcerts
+	function getAllConcerts()
 	{
 		$concertArray = array();
 
 		global $SQLConnection;
-		$Query = $SQLConnection->prepare("SELECT band.bname, musictype.musicName FROM band JOIN musictype ON band.musicPlaying = musicType.musicID");
+		$Query = $SQLConnection->prepare("SELECT cTitle, cVenue, cDateTime FROM concert");
 		$Query->execute();
 		$result = $Query->get_result();
 
@@ -130,9 +130,17 @@
 		//Search for music likes
 	}
 
-	function addBand($bandUsername, $bName, $bEmail, $bCity, $bURL, $musicLikeArray)
+	function addBand($bandUsername, $bName, $bEmail, $bCity, $bURL, $musicLike)
 	{
+		global $SQLConnection;
+		$timestamp = date('Y-m-d H:i:s');
 
+		$Query = $SQLConnection->prepare("INSERT INTO band VALUES(?, ?, ?)");
+		$Query->bind_param('sssssi', $bandUsername, $bName, $bEmail, $bCity, $bURL, $musicLike);
+		$Query->execute();
+		$result = $Query->get_result();
+
+		return $result;
 	}
 
 	//LoggedInUser is considered the followee
@@ -148,5 +156,18 @@
 		$result = $Query->get_result();
 
 		return $result;
+	}
+
+	function addBandToUser($username, $bandUsername)
+	{
+		global $SQLConnection;
+		$timestamp = date('Y-m-d H:i:s');
+
+		$Query = $SQLConnection->prepare("INSERT INTO fan VALUES(?, ?)");
+		$Query->bind_param('ss', $username, $bandUsername);
+		$Query->execute();
+		$result = $Query->get_result();
+
+		return $result;	
 	}
 ?>

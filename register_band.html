@@ -16,6 +16,27 @@
         <h1>Music Community</h1>
         <p>EVERYMUSIC YOU WANT TO LISTEN </p>
       </div>
+       <div id="loginBlock">
+                        <h3>Login</h3>
+                        <form role="form" method="POST" id="loginForm">
+                            <div class="form-group">
+                                <input type="textfield" id ="username" placeholder="Username" name="username"></input>
+                                <input type="password" placeholder="Password" name="password"></input>
+                                <div id="loginFormButtons"> 
+                                    <input type="button" name="Submit" onclick="javascript:loginUser()" value="Submit"/>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="loginFailed">Login Fail</div>
+                        <form id="registerForm" role="form" action="register.html" method="POST">
+                            No Login? <input type="Submit" name="Register" value="Register"/>
+                        </form>    
+                    </div>
+                    <!--hidden-->
+                    <div id="loggedInBlock" class="hiddenBlock">
+                        <h3>Welcome</h3>
+                        <a href="user_account.html">Account</a>        
+                    </div>
     </div> -->
   </div>
   <div id="mainCont">

@@ -111,16 +111,52 @@
 	{
 		global $SQLConnection;
 		$allUserArray = array();
+		$usernameArray = array();
 
-		$Query = $SQLConnection->prepare("SELECT * FROM users");
+		$Query = $SQLConnection->prepare("SELECT uName, users.username, musictype.musicName, musicsubtype.musicSubName
+										  FROM users
+										  JOIN musicLike ON musicLike.username = users.username
+										  JOIN musictype ON musicLike.musicID = musictype.musicID
+										  JOIN musicsubtype ON musicLike.musicID = musicsubtype.musicID");
 		$Query->execute();
 
 		$result = $Query->get_result();
 
 		while($row = $result->fetch_assoc())
+		{
 			array_push($allUserArray, $row);
+			array_push($usernameArray, $row['username']);
+		}
 
-		return json_encode($allUserArray);
+		$uniqueUser = array_unique($usernameArray);
+
+		$musicType = "";
+		$Name = "";
+		
+		$finalArray = array();
+		$jsonArray = array();
+
+		foreach($uniqueUser as $username)
+		{
+			$musicSubArray = array();
+			foreach($allUserArray as $user)
+			{
+				if($username == $user['username'])
+				{
+					$musicType = $user['musicName'];
+					$name = $user['uName'];
+					array_push($musicSubArray, $user['musicSubName']);
+				}
+			}
+			$finalArray['musicName'] = $musicType;
+			$finalArray['uName'] = $name;
+			$finalArray['username'] = $username;
+			$finalArray['musicLikes'] = $musicSubArray;
+
+			array_push($jsonArray, $finalArray);
+		}
+
+		return json_encode($jsonArray);
 	}
 
 	function searchForUser($searchText)

@@ -28,7 +28,7 @@ function loginUser()
     	data: $("#loginForm").serialize()
     }).done(function(result)
     {
-    	if(result == 'null')
+    	if(result == '')
         {
             $("#loginFailed").css('display','inline');
         }
@@ -38,8 +38,10 @@ function loginUser()
             $("#loggedInBlock").css('display', 'initial');
 
             
-            $("body").append("<p id=hiddenUsername>" + username + "</p>");
-            $("#hiddenUsername").css("display", "none");
+            //$("body").append("<p id=hiddenUsername>" + username + "</p>");
+            //$("#hiddenUsername").css("display", "none");
+
+            document.cookie = "username=" + username;
         }
     });
 
@@ -50,6 +52,8 @@ function loginUser()
 
 function loadBandPage()
 {
+    isUserLoggedIn();
+    
     $.ajax({
         url: "php/ajax_GetAllBands.php",
         dataType: "json"
@@ -66,8 +70,23 @@ function loadBandPage()
     });
 }
 
+function isUserLoggedIn()
+{
+    var cookies = document.cookie;
+
+    if(document.cookie)
+    {
+        //Hide login div - show welcome div
+        $("#loginBlock").css('display', 'none');
+        $("#loggedInBlock").css('display', 'initial');
+    }
+}
+
 function loadHomePage()
 {
+    
+    isUserLoggedIn();
+
     //Get upcoming concerts
     $.ajax({
         url: "php/ajax_GetUpcomingConcerts.php",
@@ -113,6 +132,8 @@ function loadHomePage()
 
 function loadConcertPage()
 {
+    isUserLoggedIn();
+
     $.ajax({
         url: "php/ajax_GetAllConcerts.php",
         dataType: "json"
@@ -126,6 +147,33 @@ function loadConcertPage()
         }
 
         $("#concertSearchTable").append(html);
+    });
+}
+
+function loadUserPage()
+{
+    isUserLoggedIn();
+
+    $.ajax({
+        url:"php/ajax_GetAllUsers.php",
+        dataType: "json"
+    }).done(function(result)
+    {
+        var html = "";
+
+        for(var i = 0; i < result.length; i++)
+        {
+            var musicLikesSerialized = '';
+
+            for(var j = 0; j < result[i]['musicLikes'].length; j++)
+            {
+                musicLikesSerialized += result[i]['musicLikes'][j] + ", ";
+            }
+
+            html += "<tr username=\"" + result[i]['username'] + "\"><td>" + result[i]['uName'] +  "</td><td>" + musicLikesSerialized + "</td><td><button id=\"addUser_" + i + "\">Follow</button></td></tr>";
+        }
+
+        $("#friendSearchTable").append(html);
     });
 }
 

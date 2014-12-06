@@ -61,7 +61,7 @@ function loadBandPage()
 
         for(var i = 0; i < result.length; i++)
         {
-            html += "<tr><td>" + result[i]["bname"] + "</td><td>" + result[i]["musicName"] + "</td><td><button id=\"AddBand_" + i + "\" name=\"addButton\" onclick=javascript:goToBand(\"" + result[i]["bandUsername"] + "\")>GO TO</button></td></tr>";
+            html += "<tr><td>" + result[i]["bname"] + "</td><td>" + result[i]["musicName"] + "</td><td><form action=\"aBand_Main.html\"><button type=\"Submit\" name=\"bandUsername\" value=\"" + result[i]['bandUsername'] + "\">GO TO</button></form></td></tr>";
         }
 
         $("#bandSearchTable").append(html);
@@ -264,3 +264,38 @@ function loadUserAccountPage()
         $("#friendFeedTable").append(html);
    });
 }
+
+function loadSelectedBandPage()
+{
+    isUserLoggedIn();
+    var bandusername = getUrlParameter("bandUsername");
+
+
+    //Get Info about band
+    $.ajax({
+        url: "php/ajax_GetSelectedBand.php",
+        dataType: "json",
+        data: "bandusername=" + bandusername
+    }).done(function(result)
+    {
+        $("#bUsername").val(bandusername);
+        $("#bName").val(result[0]['bname']);
+        $("#bEmail").val(result[0]['bandEmail']);
+        $("#bCity").val(result[0]['bandCity']);
+        $("#bURL").val(result[0]['bandURL']);
+    });
+}
+
+function getUrlParameter(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) 
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) 
+        {
+            return sParameterName[1];
+        }
+    }
+}         

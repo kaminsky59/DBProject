@@ -14,7 +14,7 @@
         <link href="css/styles.css" rel="stylesheet" type="text/css" />
         <link href="css/multi-select.css" rel="stylesheet" type="text/css" />
     </head>
-    <body onload="loadBandPage()">
+    <body onload="loadSelectedBandPage()">
         <div id="main">
             <div id="header">
                 <div id="menu">  <a href="#">ABOUT US </a> <a href="concert_main.html">CONCERTS</a> <a href="band_main.html">BANDS</a> <a href="friends_main.html">FRIENDS</a><a href="index.html">HOME</a> </div>
@@ -48,12 +48,10 @@
                 </div>
             </div>
             <div id="mainCont">
-                <div id="Register New Band">
-                    <form action="register_band.html">
-                        <button type="submit" class="btn btn-success">Register Band</button>
-                    </form>
+                <div id="LikeBand">
+                        <button type="submit" id="likeBandButton" class="btn btn-success">Like</button>
                 </div>
-                <div id="leftCol">
+                <!-- <div id="leftCol">
                     <div id="playListTop">
                         <div id="searchBand">
                             <h3>Search for Bands</h3>
@@ -81,7 +79,7 @@
                     <div id="playListBody">    
                     </div>
                     <div id="playListBot"></div>
-                </div>
+                </div> -->
                 <div class="newBandClass">
                     <input class="toggle-box" id="header1" type="checkbox" >
                     <label for="header1">Click here to read more!</label>
@@ -91,16 +89,30 @@
                         <div class="form-group">
                             <form id="newBandForm">
                                 <div class="form-group">
-                                    <label for="bUsername">Username</label>
-                                    <input type="textfield" class="form-control" id="bUsername" placeholder="Enter Username">
+                                    <input type="hidden" class="form-control" id="bUsername" placeholder="Enter Username" readonly="">
                                 </div>
                                 <div class="form-group">
                                     <label for="bName">Name</label>
                                     <input type="textfield" class="form-control" id="bName" placeholder="Enter Name">
                                 </div>
                                 <div class="form-group">
-                                    <label for="bUsername">Username</label>
-                                    <input type="textfield" class="form-control" id="bUsername" placeholder="Enter Username">
+                                    <label for="bEmail">Email Address</label>
+                                    <input type="textfield" class="form-control" id="bEmail" placeholder="Enter Email Address">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bCity">City</label>
+                                    <input type="textfield" class="form-control" id="bCity" placeholder="Enter City">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bURL">URL</label>
+                                    <input type="textfield" class="form-control" id="bURL" placeholder="Enter Band URL">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bEmail">Email Address</label>
+                                    <input type="textfield" class="form-control" id="bEmail" placeholder="Enter Email Address">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary" onclick="javascript:updateBand()" >Update</button>
                                 </div>
                             </form>
                             <!--Add Jquery UI Datepicker-->

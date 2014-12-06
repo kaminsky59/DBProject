@@ -251,4 +251,20 @@
 
 		return json_encode($userArray);			
 	}
+
+	function getSelectedBand($bandusername)
+	{
+		$bandInfoArray = array();
+
+		global $SQLConnection;
+		$Query = $SQLConnection->prepare("SELECT * FROM band WHERE bandUsername = ?");
+		$Query->bind_param('s', $bandusername);
+		$Query->execute();
+		$result = $Query->get_result();
+
+		while($row = $result->fetch_assoc())
+			array_push($bandInfoArray, $row);
+
+		return json_encode($bandInfoArray);		
+	}
 ?>

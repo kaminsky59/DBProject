@@ -5,8 +5,6 @@
  */
 $(document).ready(function()
 {
-    $('#select-from').multiSelect({ selectableOptgroup: true });
-
     //Load home screen upcoming events
 
 
@@ -14,9 +12,42 @@ $(document).ready(function()
     //Load info about your friends
 });
 
+function loadRegisterPage()
+{
+    $.ajax({
+        url: "php/ajax_LoadRegisterMusic.php",
+        dataType: "json"
+    }).done(function(result)
+    {
+        var html = "";
+        for(var i = 0; i < result.length; i++)
+        {
+            html += "<optgroup label=\"" + result[i]['musicName'] + "\">";
+
+            for(var j = 0; j < result[i]['musicSubType'].length; j++)
+            {
+                html+= "<option value=\"musicID_" + result[i]['musicID'] + "_" + result[i]['musicSubType'][j] + "\">" + result[i]['musicSubType'][j] + "</option>";
+            }
+
+            html += "</optgroup>";
+        }
+        $("#select-from").append(html);
+
+        $('#select-from').multiSelect({ selectableOptgroup: true });
+    });
+}
+
 function registerUser()
 {
     var test = $('#registerForm').serialize();
+
+    $.ajax({
+        url: "php/ajax_RegisterUser.php",
+        data: $('#registerForm').serialize()
+    }).done(function()
+    {
+        alert("User Register! Please log in");
+    })
 }
 
 function loginUser()
@@ -168,7 +199,7 @@ function loadUserPage()
                 musicLikesSerialized += result[i]['musicLikes'][j] + ", ";
             }
 
-            html += "<tr username=\"" + result[i]['username'] + "\"><td>" + result[i]['uName'] +  "</td><td>" + musicLikesSerialized + "</td><td><button id=\"addUser_" + i + "\">Follow</button></td></tr>";
+            html += "<tr username=\"" + result[i]['username'] + "\"><td>" + result[i]['uName'] +  "</td><td>" + musicLikesSerialized + "</td><td><form action=\"aFriend_main.html\"><button name=\"followeeUser\" value=\"" + result[i]['username'] + "\">View</button></form></td></tr>";
         }
 
         $("#friendSearchTable").append(html);
@@ -207,12 +238,8 @@ function addConcert(concertName)
     }).done();
 }
 
-function loadUserAccountPage()
+function getConcertForUser(username, tableID)
 {
-    isUserLoggedIn();
-
-    var username = getUsernameFromCookie();
-
     $.ajax({
         url: "php/ajax_GetConcertForUser.php",
         data: "username=" + username,
@@ -245,8 +272,17 @@ function loadUserAccountPage()
             html += "<tr><td>" + result[i]["cTitle"] + "</td><td>" + attended + "</td><td>" + rating + "</td><td>" + review + "</td></tr>";
         }
 
-        $("#userConcertTable").append(html);
+        $("#" + tableID).append(html);
     });
+}
+
+function loadUserAccountPage()
+{
+    isUserLoggedIn();
+
+    var username = getUsernameFromCookie();
+
+    getConcertForUser(username, "userConcertTable");
 
     $.ajax({
         url: "php/ajax_GetCurrentFriends.php",
@@ -258,7 +294,7 @@ function loadUserAccountPage()
 
         for(var i = 0; i < result.length; i++)
         {
-           html += "<tr><td>" + result[i]["uName"] + "</td><td>" + "</td><td>" +"</td><td>" + "</td></tr>";
+           html += "<tr><td>" + result[i]["uName"] + "</td><td><form action=\"aFriend_main.html\"><button type=submit name=\"followeeUser\" value=\"" + result[i]['followee'] + "\">View</button></td><td>" +"</td><td>" + "</td></tr>";
         }
 
         $("#friendFeedTable").append(html);
@@ -347,3 +383,22 @@ function updateConcert()
         location.reload();
     });
 }         
+
+function loadFriendsPage()
+{
+    var followeeUser = getUrlParameter("followeeUser");
+
+    isUserLoggedIn();
+
+    getConcertForUser(followeeUser, "friendConcertTable");
+
+    $.ajax({
+        url: "php/ajax_GetUserInfo.php",
+        dataType: "json",
+        data: "aUser=" + followeeUser
+    }).done(function(result)
+    {
+        $("#followerUser").html(" " + followeeUser);
+        $("#userFullName").html(" (" + result[0]['uName'] + ")");
+    }); 
+}

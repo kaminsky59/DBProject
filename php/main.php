@@ -2,15 +2,15 @@
 	$SQLConnection = new mysqli("localhost", "root", "", "projectdb");
 
 	//Add user music likes
-	function registerUser($username, $password, $uName, $uDOB, $uCity)
+	function registerUser($username, $password, $uName, $uEmail, $uDOB, $uCity, $musicSelect)
 	{
 		$trustLevel = 1;
 		global $SQLConnection;
 		$timestamp = date('Y-m-d H:i:s');
 
-		$Query = $SQLConnection->prepare("INSERT INTO users (username, uName, uDOB, uEmail, uCity, trust, uLoginTime)
-										  VALUES (?, ?, ?, ?, ?, ?, ?)");
-		$Query->bind_param('sssssis', $username, $password, $uName, $uDOB, $uCity, $trustLevel, $timestamp);
+		$Query = $SQLConnection->prepare("INSERT INTO users (username, password, uName, uDOB, uEmail, uCity, trust, uLoginTime)
+										  VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+		$Query->bind_param('ssssssis', $username, $password, $uName, $uDOB, $uEmail, $uCity, $trustLevel, $timestamp);
 		$Query->execute();
 	}
 
@@ -306,5 +306,65 @@
 		$result = $Query->get_result();
 		
 		return $result;
+	}
+
+	function getUserInfo($aUser)
+	{
+		$userArray = array();
+
+		global $SQLConnection;
+		$Query = $SQLConnection->prepare("SELECT uName FROM users WHERE username = ?");
+		$Query->bind_param('s', $aUser);
+		$Query->execute();
+		$result = $Query->get_result();
+
+		while($row = $result->fetch_assoc())
+			array_push($userArray, $row);
+
+		return json_encode($userArray);	
+	}
+
+	function loadRegisterMusic()
+	{
+		$musicArray = array();
+		$fullArray = array();
+
+		global $SQLConnection;
+		$Query = $SQLConnection->prepare("SELECT musictype.musicID, musicName, musicSubName FROM musictype JOIN musicsubtype ON musictype.musicID = musicsubtype.musicID");
+		$Query->execute();
+		$result = $Query->get_result();
+
+		while($row = $result->fetch_assoc())
+		{
+			// $musicArray['musicID'] = $row["musicID"];
+			// $musicArray['musicName'] = $row['musicName'];  
+			array_push($musicArray, $row["musicID"]);
+			array_push($fullArray, $row);
+		}
+
+		$musicUnique = array_unique($musicArray);
+	
+		$finalArray = array();
+		foreach($musicUnique as $musicID)
+		{
+			$musicName = "";
+			$rowArray = array();
+			$musicSubArray = array();
+			foreach($fullArray as $fullRow)
+			{
+				if($musicID == $fullRow['musicID'])
+				{
+					array_push($musicSubArray, $fullRow['musicSubName']);
+					$musicName = $fullRow['musicName'];
+				}
+			}
+			$rowArray['musicID'] = $musicID;
+			$rowArray['musicName'] = $musicName;
+			$rowArray['musicSubType'] = $musicSubArray;
+
+			array_push($finalArray, $rowArray);
+		}
+
+		return json_encode($finalArray);
 	}
 ?>

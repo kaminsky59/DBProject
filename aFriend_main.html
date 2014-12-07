@@ -14,7 +14,7 @@
         <link href="css/styles.css" rel="stylesheet" type="text/css" />
         <link href="css/multi-select.css" rel="stylesheet" type="text/css" />
     </head>
-    <body onload="loadUserPage()">
+    <body onload="loadFriendsPage()">
         <div id="main">
             <div id="header">
                 <div id="menu">  <a href="#">ABOUT US </a> <a href="concert_main.html">CONCERTS</a> <a href="band_main.html">BANDS</a> <a href="friends_main.html">FRIENDS</a><a href="index.html">HOME</a> </div>
@@ -47,21 +47,18 @@
                 </div>
             </div>
             <div id="mainCont">
+                <div id="usernameHeader">
+                    <h2>User:<span id="followerUser"></span><span id="userFullName"></span></h2>
+
                 <div id="leftCol">
                     <div id="playListTop">
                         <div id="searchBand">
-                            <h3>Add a friend</h3>
+                            <h3>Friends Concerts</h3>
                         </div>
                     </div>
                     <div id="playListBody">
-                        <form>
-                            <div id="friendSearchDiv" class="leftColSearch">
-                                <input type="text" id="friendSearch" class="form-control searchBox" placeholder="Search">
-                            </div>
-                        </form>
-                        <div id="friendTableResult" class="SearchTableResult">
-                            <table id="friendSearchTable" class="SearchTable">
-                                
+                        <div id="friendConcertTableResult" class="SearchTableResult">
+                            <table id="friendConcertTable" class="SearchTable">
                             </table>
                         </div>
                     </div>
@@ -70,7 +67,7 @@
                 <div id="rightCol">
                     <div id="playListTop">
                         <div id="top_bands">
-                            <h3>Current Friends</h3>
+                            <h3>Recommendations</h3>
                         </div>
                     </div>
                     <div id="playListBody">    

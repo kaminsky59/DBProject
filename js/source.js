@@ -141,7 +141,7 @@ function loadConcertPage()
 
         for(var i = 0; i < result.length; i++)
         {
-           html += "<tr><td>" + result[i]["cTitle"] + "</td><td>" + result[i]["cVenue"] + "</td><td>" + result[i]["cDateTime"] + "</td><td>" + "</td><td><button onclick=javascript:addConcert(\"" + result[i]['cName'] + "\")>Add</button></td></td><td><button onclick=javascript:editConcert(\"" + result[i]['cName'] + "\")>Edit</button></td></tr>";
+           html += "<tr><td>" + result[i]["cTitle"] + "</td><td>" + result[i]["cVenue"] + "</td><td>" + result[i]["cDateTime"] + "</td><td>" + "</td><td><form action=\"aConcert_Main.html\"><button type=\"Submit\" name=\"cName\" value=\"" + result[i]['cName'] + "\">GO TO</button></form></td></tr>";
         }
 
         $("#concertSearchTable").append(html);
@@ -270,7 +270,7 @@ function loadSelectedBandPage()
     isUserLoggedIn();
     var bandusername = getUrlParameter("bandUsername");
 
-
+    $("#likeBandButton").attr("onclick", "javacript:addBand(\"" + bandusername + "\")");
     //Get Info about band
     $.ajax({
         url: "php/ajax_GetSelectedBand.php",
@@ -286,6 +286,18 @@ function loadSelectedBandPage()
     });
 }
 
+function updateBand()
+{
+    $.ajax({
+        url: "php/ajax_updateBand.php",
+        data: $("#newBandForm").serialize()
+    }).done(function(result)
+    {
+        alert("Band has been updated");
+        location.reload();
+    });
+}
+
 function getUrlParameter(sParam)
 {
     var sPageURL = window.location.search.substring(1);
@@ -298,4 +310,40 @@ function getUrlParameter(sParam)
             return sParameterName[1];
         }
     }
+}
+
+function loadSelectedConcertPage()
+{
+    isUserLoggedIn();
+    var concertName = getUrlParameter("cName");
+
+    //Check if user is scheduled to attend concert -- change button to 'attending' (RED COLOR)
+
+    $("#attendBandButton").attr("onclick", "javacript:addConcert(\"" + concertName + "\")");
+    //Get Info about band
+    $.ajax({
+        url: "php/ajax_GetSelectedConcert.php",    
+        dataType: "json",
+        data: "cName=" + concertName
+    }).done(function(result)
+    {
+        $("#cName").val(concertName);
+        $("#cTitle").val(result[0]['cTitle']);
+        $("#cVenue").val(result[0]['cVenue']);
+        $("#cDateTime").val(result[0]['cDateTime']);
+        $("#cTicketPrice").val(result[0]['cTicketPrice']);
+        $("#cTicketLink").val(result[0]['cTicketLink']);
+    });
+}
+
+function updateConcert()
+{
+    $.ajax({
+        url: "php/ajax_UpdateConcert.php",
+        data: $("#newConcertForm").serialize()
+    }).done(function(result)
+    {
+        alert("Concert has been updated");
+        location.reload();
+    });
 }         

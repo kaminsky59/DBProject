@@ -267,4 +267,44 @@
 
 		return json_encode($bandInfoArray);		
 	}
+
+	function updateBand($bandUsername, $bName, $bEmail, $bCity, $bURL)
+	{
+		global $SQLConnection;
+		$Query = $SQLConnection->prepare("UPDATE band SET bname=?, bandEmail=?, bandCity=?, bandURL=? WHERE bandUsername=?");
+		$Query->bind_param('sssss', $bName, $bEmail, $bCity, $bURL, $bandUsername);
+		$Query->execute();
+		$result = $Query->get_result();
+
+		return $result;
+	}
+
+	function getSelectedConcert($cName)
+	{
+		$concertInfoArray = array();
+
+		global $SQLConnection;
+		$Query = $SQLConnection->prepare("SELECT * FROM concert WHERE cName = ?");
+		$Query->bind_param('s', $cName);
+		$Query->execute();
+		$result = $Query->get_result();
+
+		while($row = $result->fetch_assoc())
+			array_push($concertInfoArray, $row);
+
+		return json_encode($concertInfoArray);		
+	}
+
+	function updateConcert($cName, $cTitle, $cVenue, $cDateTime, $cTicketLink)
+	{
+		$concertInfoArray = array();
+
+		global $SQLConnection;
+		$Query = $SQLConnection->prepare("UPDATE concert SET cTitle=?, cVenue=?, cDateTime=?, cTicketLink=? WHERE cName=?");
+		$Query->bind_param('sssss', $cTitle, $cVenue, $cDateTime, $cTicketLink, $cName);
+		$Query->execute();
+		$result = $Query->get_result();
+		
+		return $result;
+	}
 ?>

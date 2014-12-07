@@ -14,7 +14,7 @@
         <link href="css/styles.css" rel="stylesheet" type="text/css" />
         <link href="css/multi-select.css" rel="stylesheet" type="text/css" />
     </head>
-    <body onload="loadConcertPage()">
+    <body onload="loadSelectedConcertPage()">
         <div id="main">
             <div id="header">
                 <div id="menu">  <a href="#">ABOUT US </a> <a href="concert_main.html">CONCERTS</a> <a href="band_main.html">BANDS</a> <a href="friends_main.html">FRIENDS</a><a href="index.html">HOME</a> </div>
@@ -42,27 +42,58 @@
                     <!--hidden-->
                     <div id="loggedInBlock" class="hiddenBlock">
                         <h3>Welcome</h3>
-                        <a href="user_account.html">Account</a> <button id="LogOut"  onclick="javascript:logOutUser()">Log Out</button>    
+                        <a href="user_account.html">Account</a>
+                        <button id="LogOut"  onclick="javascript:logOutUser()">Log Out</button>
                     </div>
                 </div>
             </div>
             <div id="mainCont">
+                <div id="attendConcert" class="aButtonTop">
+                        <button type="submit" id="attendBandButton" class="btn btn-success" >Attend</button>
+                </div>
+                <div class="newBandClass">
+                    <input class="toggle-box" id="header1" type="checkbox" >
+                    <label for="header1">Click here to read more!</label>
+                </div>
+                <div id="newConcert" class="newBandClass">
+                    <form id="newConcertForm">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="cName" name="cName" placeholder="Enter Username" readonly="">
+                        </div>
+                        <div class="form-group">
+                            <label for="cTitle">Title</label>
+                            <input type="textfield" class="form-control" id="cTitle" name="cTitle" placeholder="Enter Title">
+                        </div>
+                        <div class="form-group">
+                            <label for="bEmail">Venue</label>
+                            <input type="textfield" class="form-control" id="cVenue" name="cVenue" placeholder="Enter Venue">
+                        </div>
+                        <div class="form-group">
+                        <!--Enter datepicker widget-->
+                            <label for="cDateTime">Date/Time</label>
+                            <input type="textfield" class="form-control" id="cDateTime" name="cDateTime" placeholder="Enter Date">
+                        </div>
+                        <div class="form-group">
+                            <label for="cTicketPrice">Ticket Price</label>
+                            <input type="textfield" class="form-control" id="cTicketPrice" name="cTicketPrice"  readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="cTicketLink">Ticket Purchase Link</label>
+                            <input type="textfield" class="form-control" id="cTicketLink" name="cTicketLink" placeholder="Enter Ticket Link">
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" onclick="javascript:updateConcert()">Update</button>
+                        </div>
+                            <!--Add Jquery UI Datepicker-->
+                    </form>
+                </div>
                 <div id="leftCol">
                     <div id="playListTop">
-                        <div id="searchBand">
-                            <h3>Search for Concerts</h3>
+                        <div id="attendInfo">
+                            <h3>Concert Information</h3>
                         </div>
                     </div>
                     <div id="playListBody">
-                        <form>
-                            <div id="concertSearchDiv" class="leftColSearch">
-                                <input type="text" id="concertSearch" class="form-control searchBox" placeholder="Search (Name, Genre, etc)">
-                            </div>
-                        </form>
-                        <div id="concertTableResult" class="SearchTableResult">
-                            <table id="concertSearchTable" class="SearchTable">
-                            </table>
-                        </div>
                     </div>
                     <div id="playListBot"></div>
                 </div>
@@ -75,6 +106,10 @@
                     <div id="playListBody">    
                     </div>
                     <div id="playListBot"></div>
+                </div> 
+                <div class="newBandClass">
+                    <input class="toggle-box" id="header1" type="checkbox" >
+                    <label for="header1">Click here to read more!</label>
                 </div>
                 <div id="footer">
                     <div id="footerMenu"></div>
@@ -82,8 +117,5 @@
                     <div class="rights">Designed by: <a title="Web Templates" href="http://www.elegant-templates.com">Elegant Templates</a></div>
                 </div>
             </div>
-        </div>
-
-
     </body>
 </html>

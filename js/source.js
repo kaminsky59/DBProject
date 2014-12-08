@@ -276,6 +276,25 @@ function getConcertForUser(username, tableID)
     });
 }
 
+function getBandForUser(username, tableID)
+{
+    $.ajax({
+        url: "php/ajax_GetBandForUser.php",
+        dataType: "json",
+        data: "username=" + username
+    }).done(function(result)
+    {
+        var html = "";
+
+        for(var i = 0; i < result.length; i++)
+        {
+            html += "<tr><td>" + result[i]["bname"] + "</td><td>" + result[i]["musicName"] + "</td><td><form action=\"aBand_Main.html\"><button type=\"Submit\" name=\"bandUsername\" value=\"" + result[i]['bandUsername'] + "\">GO TO</button></form></td></tr>";
+        }
+
+        $("#" + tableID).append(html);
+    });
+}
+
 function loadUserAccountPage()
 {
     isUserLoggedIn();
@@ -283,6 +302,8 @@ function loadUserAccountPage()
     var username = getUsernameFromCookie();
 
     getConcertForUser(username, "userConcertTable");
+
+    getBandForUser(username, "userBandTable");
 
     $.ajax({
         url: "php/ajax_GetCurrentFriends.php",
@@ -294,7 +315,7 @@ function loadUserAccountPage()
 
         for(var i = 0; i < result.length; i++)
         {
-           html += "<tr><td>" + result[i]["uName"] + "</td><td><form action=\"aFriend_main.html\"><button type=submit name=\"followeeUser\" value=\"" + result[i]['followee'] + "\">View</button></td><td>" +"</td><td>" + "</td></tr>";
+           html += "<tr><td>" + result[i]["uName"] + "</td><td><form action=\"aFriend_main.html\"><button type=submit name=\"followeeUser\" value=\"" + result[i]['followee'] + "\">View</button></form></td><td>" +"</td><td>" + "</td></tr>";
         }
 
         $("#friendFeedTable").append(html);
@@ -390,6 +411,11 @@ function loadFriendsPage()
 
     isUserLoggedIn();
 
+    //Call SQL if the friend is being followed
+    //Set the value to Following
+
+    $("#addFriendButton").attr("onclick", "javacript:addFriend(\"" + followeeUser + "\")");
+
     getConcertForUser(followeeUser, "friendConcertTable");
 
     $.ajax({
@@ -400,5 +426,20 @@ function loadFriendsPage()
     {
         $("#followerUser").html(" " + followeeUser);
         $("#userFullName").html(" (" + result[0]['uName'] + ")");
+    }); 
+}
+
+function addFriend(friendUsername)
+{
+    var username = getUsernameFromCookie();
+
+    $.ajax({
+        url: "php/ajax_AddFriendForUser.php",
+        data: "username=" + username + "&followee=" + friendUsername
+    }).done(function(result)
+    {
+        alert("Friend Added");
+
+        $("#addFriendButton").text("Following");
     }); 
 }

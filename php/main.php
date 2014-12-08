@@ -236,6 +236,23 @@
 		return json_encode($userConcerts);		
 	}
 
+	function getBandsForUser($username)
+	{
+		$userBands = array();
+
+		global $SQLConnection;
+		$Query = $SQLConnection->prepare("SELECT band.bandUsername, band.bname, musictype.musicName FROM fan JOIN band ON fan.bandUsername = band.bandUsername 
+										  JOIN musictype ON band.musicPlaying = musicType.musicID WHERE fan.username = ?");
+		$Query->bind_param('s', $username);
+		$Query->execute();
+		$result = $Query->get_result();
+
+		while($row = $result->fetch_assoc())
+			array_push($userBands, $row);
+
+		return json_encode($userBands);		
+	}
+
 	function getCurrentFriends($username)
 	{
 		$userArray = array();
@@ -366,5 +383,15 @@
 		}
 
 		return json_encode($finalArray);
+	}
+
+	function addFriendForUser($username, $followee)
+	{
+		global $SQLConnection;
+		$Query = $SQLConnection->prepare("INSERT INTO uName FROM users WHERE username = ?");
+		$Query->bind_param('s', $aUser);
+		$Query->execute();
+		$result = $Query->get_result();
+
 	}
 ?>

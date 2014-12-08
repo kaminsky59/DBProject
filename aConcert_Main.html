@@ -51,10 +51,6 @@
                 <div id="attendConcert" class="aButtonTop">
                         <button type="submit" id="attendBandButton" class="btn btn-success" >Attend</button>
                 </div>
-                <div class="newBandClass">
-                    <input class="toggle-box" id="header1" type="checkbox" >
-                    <label for="header1">Click here to read more!</label>
-                </div>
                 <div id="newConcert" class="newBandClass">
                     <form id="newConcertForm">
                         <div class="form-group">
@@ -94,23 +90,31 @@
                         </div>
                     </div>
                     <div id="playListBody">
+                        <div id="reviewForm">
+                        <form id="userConcertReview" class="formatUserReview">
+                            <p>Concert Rating:</p>
+                            <input type="range" max="10" min="0" step="1"></input>
+                            <p>Concert Review:</p>
+                            <textarea id="reviewText" rows="4" cols="50"></textarea>
+                            <button type="button" class="btn btn-primary" onclick="javascript:addReviewInfo()">Add</button>
+                        </form>
+                        </div>
+                        <div id="addToRecommand">
+                            <form><button id="addToRecommendBtn" class="btn btn-primary">Recommend</button></form></div>    
+
                     </div>
                     <div id="playListBot"></div>
                 </div>
                 <div id="rightCol">
                     <div id="playListTop">
                         <div id="top_bands">
-                            <h3>Top Rated bands</h3>
+                            <h3>Other Users Reviews</h3>
                         </div>
                     </div>
                     <div id="playListBody">    
                     </div>
                     <div id="playListBot"></div>
                 </div> 
-                <div class="newBandClass">
-                    <input class="toggle-box" id="header1" type="checkbox" >
-                    <label for="header1">Click here to read more!</label>
-                </div>
                 <div id="footer">
                     <div id="footerMenu"></div>
                     <div class="rights">Copyright © 2003-2008 <a href="#">www.My Template.com.</a> All Rights Reserved.</div>

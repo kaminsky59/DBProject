@@ -568,4 +568,15 @@ text-decoration:underline;
 	clear:both;
 	text-align: center;
 	padding-top: 20px;
-;
+}
+
+#reviewForm
+{
+	padding-top: 20px;
+}
+
+.formatUserReview
+{
+	width:200px;
+	margin: 0 auto;
+}

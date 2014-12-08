@@ -295,6 +295,25 @@ function getBandForUser(username, tableID)
     });
 }
 
+function getRecommendationForUser(username, tableID)
+{
+    $.ajax({
+        url: "php/ajax_GetRecommendationForUser.php",
+        dataType: "json",
+        data: "username=" + username
+    }).done(function(result)
+    {
+        var html = "";
+
+        for(var i = 0; i < result.length; i++)
+        {
+            html += "<tr><td>" + result[i]["cTitle"] + "</td><td>" + result[i]["musicID"] + "</td><td><form action=\"aConcert_Main.html\"><button type=\"Submit\" name=\"cName\" value=\"" + result[i]['cname'] + "\">GO TO</button></form></td></tr>";
+        }
+
+        $("#" + tableID).append(html);
+    });
+}
+
 function loadUserAccountPage()
 {
     isUserLoggedIn();
@@ -373,10 +392,26 @@ function loadSelectedConcertPage()
 {
     isUserLoggedIn();
     var concertName = getUrlParameter("cName");
+    var username = getUsernameFromCookie();
 
     //Check if user is scheduled to attend concert -- change button to 'attending' (RED COLOR)
+    $.ajax({
+        url: "php/ajax_GetConcertAttendStatus.php",
+        data: "username=" + username + "&cName=" + concertName
+    }).done(function(result)
+    {
+        if(result == "0")
+        {
+            $("#attendBandButton").html("Unattend");
+            $("#attendBandButton").attr("onclick", "javacript:removeConcert(\"" + concertName + "\")");
+        }
+        else
+        if(result == "null")
+            $("#attendBandButton").attr("onclick", "javacript:addConcert(\"" + concertName + "\")");
+        
+    });
 
-    $("#attendBandButton").attr("onclick", "javacript:addConcert(\"" + concertName + "\")");
+    
     //Get Info about band
     $.ajax({
         url: "php/ajax_GetSelectedConcert.php",    
@@ -417,6 +452,7 @@ function loadFriendsPage()
     $("#addFriendButton").attr("onclick", "javacript:addFriend(\"" + followeeUser + "\")");
 
     getConcertForUser(followeeUser, "friendConcertTable");
+    getRecommendationForUser(followeeUser, "friendRecommendTable");
 
     $.ajax({
         url: "php/ajax_GetUserInfo.php",
@@ -426,7 +462,9 @@ function loadFriendsPage()
     {
         $("#followerUser").html(" " + followeeUser);
         $("#userFullName").html(" (" + result[0]['uName'] + ")");
-    }); 
+    });
+
+
 }
 
 function addFriend(friendUsername)
@@ -442,4 +480,27 @@ function addFriend(friendUsername)
 
         $("#addFriendButton").text("Following");
     }); 
+}
+
+function changeSlider()
+{
+    var sliderValue = $("#reviewRange").val();
+    $("#sliderValue").html("Rating: " + sliderValue);
+}
+
+function addReviewInfo()
+{
+    var username = getUsernameFromCookie();
+    var getConcertName = getUrlParameter("cName"); 
+    var sliderValue = $("#reviewRange").val();
+    var reviewText = $("#reviewText").val();
+
+    $.ajax({
+        url: "php/ajax_AddReviewInfoForConcert.php",
+        data: "username=" + username + "&concertName=" + getConcertName + "&rating=" + sliderValue + "&review=" + reviewText
+    }).done(function(result)
+    {
+        alert("Review saved");
+    }); 
+
 }

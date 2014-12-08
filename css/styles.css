@@ -495,9 +495,9 @@ text-decoration:underline;
 
 .searchBox
 {
-    width: 200px;
-    height:20px;
     margin: 0 auto;
+    text-align: center;
+    padding-top: 10px;
 }
 
 .leftColSearch
@@ -579,4 +579,9 @@ text-decoration:underline;
 {
 	width:200px;
 	margin: 0 auto;
+}
+
+#addReviewButton
+{
+	padding: 10px;
 }

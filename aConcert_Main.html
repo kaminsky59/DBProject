@@ -49,6 +49,7 @@
             </div>
             <div id="mainCont">
                 <div id="attendConcert" class="aButtonTop">
+                        <span id="attendStatus"></span>
                         <button type="submit" id="attendBandButton" class="btn btn-success" >Attend</button>
                 </div>
                 <div id="newConcert" class="newBandClass">
@@ -93,15 +94,17 @@
                         <div id="reviewForm">
                         <form id="userConcertReview" class="formatUserReview">
                             <p>Concert Rating:</p>
-                            <input type="range" max="10" min="0" step="1"></input>
+                            <input id="reviewRange" onchange="changeSlider()" type="range" max="10" min="0" step="1"></input>
+                            <p id="sliderValue">Rating: </p>
                             <p>Concert Review:</p>
                             <textarea id="reviewText" rows="4" cols="50"></textarea>
-                            <button type="button" class="btn btn-primary" onclick="javascript:addReviewInfo()">Add</button>
+                            <div id="addReviewButton">
+                                <button type="button" class="btn btn-primary" onclick="javascript:addReviewInfo()">Add</button>
+                            </div>
                         </form>
                         </div>
                         <div id="addToRecommand">
-                            <form><button id="addToRecommendBtn" class="btn btn-primary">Recommend</button></form></div>    
-
+                            <form><button id="addToRecommendBtn" class="btn btn-primary">Recommend</button></form></div>
                     </div>
                     <div id="playListBot"></div>
                 </div>

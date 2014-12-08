@@ -15,6 +15,25 @@
         <link href="css/multi-select.css" rel="stylesheet" type="text/css" />
     </head>
     <body onload="loadUserPage()">
+    <div class="modal fade" id="searchDialog" tabindex="-1" role="dialog" aria-labelledby="searchLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Modal title</h4>
+              </div>
+              <div class="modal-body">
+                <form>
+                    <input type="text" name="searchKeyword"></input>
+                </form>  
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div id="main">
             <div id="header">
                 <div id="menu">  <a href="#">ABOUT US </a> <a href="concert_main.html">CONCERTS</a> <a href="band_main.html">BANDS</a> <a href="friends_main.html">FRIENDS</a><a href="index.html">HOME</a> </div>
@@ -54,11 +73,9 @@
                         </div>
                     </div>
                     <div id="playListBody">
-                        <form>
-                            <div id="friendSearchDiv" class="leftColSearch">
-                                <input type="text" id="friendSearch" class="form-control searchBox" placeholder="Search">
-                            </div>
-                        </form>
+                        <div class="searchBox">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchDialog">Search</button>
+                        </div>
                         <div id="friendTableResult" class="SearchTableResult">
                             <table id="friendSearchTable" class="SearchTable">
                                 

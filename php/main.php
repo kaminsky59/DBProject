@@ -385,13 +385,44 @@
 		return json_encode($finalArray);
 	}
 
-	function addFriendForUser($username, $followee)
+	function AddReviewInfoForConcert($username, $concertName, $rating, $review)
 	{
 		global $SQLConnection;
-		$Query = $SQLConnection->prepare("INSERT INTO uName FROM users WHERE username = ?");
-		$Query->bind_param('s', $aUser);
+		$Query = $SQLConnection->prepare("UPDATE attend SET rating=?, review=? WHERE username=? AND cname=?");
+		$Query->bind_param('ssss', $rating, $review, $username, $concertName);
+		$Query->execute();
+		$result = $Query->get_result();
+	}
+
+	function getConcertAttendStatus($username, $concertName)
+	{
+		global $SQLConnection;
+		$Query = $SQLConnection->prepare("SELECT attend.attended FROM attend WHERE username=? AND cname=?");
+		$Query->bind_param('ss', $username, $concertName);
+		$Query->execute();
+
+		$result = $Query->get_result();
+		$row = $result->fetch_assoc();
+			
+		return $row['attended'];
+	}
+
+	function getRecommendationForUser($username)
+	{
+		$recommendationArray = array();
+
+		global $SQLConnection;
+		$Query = $SQLConnection->prepare("SELECT concert.cTitle, username, recommend.cname, musicID FROM recommend JOIN concert ON recommend.cname = concert.cName WHERE username = ?");
+		$Query->bind_param('s', $username);
 		$Query->execute();
 		$result = $Query->get_result();
 
+		while($row = $result->fetch_assoc())
+		{
+			array_push($recommendationArray, $row);
+		}
+
+		return json_encode($recommendationArray);
 	}
+
 ?>
